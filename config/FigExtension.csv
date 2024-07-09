@@ -1,0 +1,12 @@
+set ,val    ,Ext,Discription                                      
+0   ,jpeg   ,oo.jpg,JPEG 24 ビット	                                
+1   ,png    ,oo.png,PNG 24 ビット	                                    
+0   ,tiff   ,oo.tif,TIFF 24 ビット (圧縮)	                            
+0   ,tiffn  ,oo.tif,TIFF 24 ビット (圧縮なし)                    
+0   ,pdf    ,oo.pdf,フル ページ Portable Document Format (PDF) カラー  
+1   ,eps    ,oo.eps,Encapsulated PostScript® (EPS) レベル 3 モノクロ   
+0   ,epsc   ,oo.eps,Encapsulated PostScript (EPS) レベル 3 カラー     
+0   ,eps2   ,oo.eps,Encapsulated PostScript (EPS) レベル 2 モノクロ	
+0   ,epsc2  ,oo.eps,Encapsulated PostScript (EPS) レベル 2 カラー	      
+0   ,svg    ,oo.svg,SVG (Scalable Vector Graphics)	                
+1   ,fig    ,oo.fig,matlab の figure ファイル                         
