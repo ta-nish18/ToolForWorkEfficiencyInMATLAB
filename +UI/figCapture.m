@@ -3,6 +3,7 @@ classdef figCapture < handle
         FileName
         Extension
         SavePath
+        Position
     end
 
     properties(Access=protected)
@@ -19,21 +20,85 @@ classdef figCapture < handle
     end
 
     methods
-        function obj = figCapture(varargin)
-
+        function obj = figCapture()
+            obj.createComponent;
             
-            p = inputParser;
-            p.CaseSensitive = false;
-            addParameter(p, 'Position' , [500,500,215,200]);
-            parse(p, varargin{:});
-            opt = p.Results;
+            obj.FileName = [];
+            obj.SavePath = pwd;
+            obj.Extension = {'png','eps','fig'};
+        end
 
-            
-            obj.uifig  = uifigure('Name','Figure Capture','Position',opt.Position);
+        %%%%%%%%%%%%%%%%%%
+        %%% Set Method %%%
+        %%%%%%%%%%%%%%%%%%
+        function set.SavePath(obj,val)
+            if isempty(val)
+                val = uigetdir;
+                if ~val; error('Select Save Folder'); end
+            elseif ~isfolder(val)
+                error('It is not Folder')
+            end
+            obj.uiTextFolder.Text = val;
+        end
+
+        function set.FileName(obj,val)
+            if isempty(val)
+                val = "Fig"+string(datetime('today','Format','yyMMdd'));
+            end
+            obj.uiFileName.Value = val;
+        end
+
+        function set.Position(obj,val)
+            obj.uifig.Position = val;
+        end
+
+        function set.Extension(obj,val)
+            if isempty(val)
+                obj.setterExtension();
+                return
+            elseif isstring(val)
+                val = arrayfun(@(i) {char(val(i))}, 1:numel(val),'UniformOutput',false);
+            elseif ischar(val)
+                val = {val};
+            elseif iscell(val)
+                val = cellfun(@(c) char(c), val, 'UniformOutput',false);
+            else
+                error('Format is wrong')
+            end
+            idx = ismember(val, {'jpeg','png','tiff','tiffn','meta','pdf','eps','epsc','eps2','epsc2','meta','svg','fig'});
+            cellfun(@(c) disp(['  >> removed:',c]), val(~idx));
+            val = val(idx);
+            if sum(ismember(val,{'tiff','tiffn'}))>1
+                warning('"tiff"と"tiffn"はどちらも.tif拡張子で保存されるため、いずれか１つを選択してください。')
+            end
+            if sum(ismember(val,{'eps','epsc','eps2','epsc2'}))>1
+                warning('"eps","epsc","eps2","epsc2"はいずれも.eps拡張子で保存されるため、いずれか１つを選択してください。')
+            end
+            text = cell(2,numel(val));
+            text(1,:) = val;
+            text(2,:) = {', '};
+            text(end) = {''};
+            obj.uiTextExtension.Text = horzcat(text{:});
+            obj.uiTextExtension.UserData  = val;
+        end
+        
+        %%%%%%%%%%%%%%%%%%
+        %%% Get Method %%%
+        %%%%%%%%%%%%%%%%%%
+        function val = get.Position(obj);  val = obj.uifig.Position;           end
+        function val = get.FileName(obj);  val = obj.uiFileName.Value;         end
+        function val = get.SavePath(obj);  val = obj.uiTextFolder.Text;        end
+        function val = get.Extension(obj); val = obj.uiTextExtension.UserData; end
+    end
+
+    %%%%%%%%%%%%%%%%%%%%%%% build component %%%%%%%%%%%%%%%%%%%%%%%
+    methods(Access=protected)
+        function createComponent(obj)
+
+            %%% create
+            obj.uifig  = uifigure('Name','Figure Capture','Position',[500,500,215,200]);
             obj.uigrid = uigridlayout(obj.uifig,[4 3]);
 
-
-            %%%%%%%%%%%%%%%%%%%%%%% build component %%%%%%%%%%%%%%%%%%%%%%%
             impath = fileparts(mfilename('fullpath'));
             obj.uiCapture = uibutton(obj.uigrid, ...
                               'Text'    ,'capture',...
@@ -67,11 +132,10 @@ classdef figCapture < handle
             tag_file = uilabel(obj.uigrid,'Text','Name','FontSize',6);
             tag_dir  = uilabel(obj.uigrid,'Text','Path','FontSize',6);
             tag_ext  = uilabel(obj.uigrid,'Text','Ext' ,'FontSize',6);
-            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
-            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UI LAYOUT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            %%%% UI LAYOUT
             obj.uigrid.RowHeight   = {80,'1x','1x','1x'};
             obj.uigrid.ColumnWidth = {28,'1x',20};
 
@@ -90,79 +154,12 @@ classdef figCapture < handle
             % Tag ".ext"                 % choice >> extension
             tag_ext.Layout.Row    = 4;   obj.uiTextExtension.Layout.Row   = 4;  obj.uiExtensionIcon.Layout.Row   = 4;
             tag_ext.Layout.Column = 1;   obj.uiTextExtension.Layout.Column= 2;  obj.uiExtensionIcon.Layout.Column= 3;
-            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            
-            obj.FileName = [];
-            obj.SavePath = pwd;
-            obj.Extension = {'png','eps','fig'};
-        end
-
-
-        %%%%%% Set Method %%%%%%
-        function set.SavePath(obj,val)
-            if isempty(val)
-                val = uigetdir;
-                if ~val; error('Select Save Folder'); end
-            elseif ~isfolder(val)
-                error('It is not Folder')
-            end
-            obj.uiTextFolder.Text = val;
-        end
-
-        function set.FileName(obj,val)
-            if isempty(val)
-                val = "Fig"+string(datetime('today','Format','yyMMdd'));
-            end
-            obj.uiFileName.Value = val;
-        end
-
-        function set.Extension(obj,val)
-            if isempty(val)
-                obj.setterExtension();
-                return
-            elseif isstring(val)
-                val = arrayfun(@(i) {char(val(i))}, 1:numel(val),'UniformOutput',false);
-            elseif ischar(val)
-                val = {val};
-            elseif iscell(val)
-                val = cellfun(@(c) char(c), val, 'UniformOutput',false);
-            else
-                error('Format is wrong')
-            end
-            idx = ismember(val, {'jpeg','png','tiff','tiffn','meta','pdf','eps','epsc','eps2','epsc2','meta','svg','fig'});
-            cellfun(@(c) disp(['  >> removed:',c]), val(~idx));
-            val = val(idx);
-            if sum(ismember(val,{'tiff','tiffn'}))>1
-                warning('"tiff"と"tiffn"はどちらも.tif拡張子で保存されるため、いずれか１つを選択してください。')
-            end
-            if sum(ismember(val,{'eps','epsc','eps2','epsc2'}))>1
-                warning('"eps","epsc","eps2","epsc2"はいずれも.eps拡張子で保存されるため、いずれか１つを選択してください。')
-            end
-            text = cell(2,numel(val));
-            text(1,:) = val;
-            text(2,:) = {', '};
-            text(end) = {''};
-            obj.uiTextExtension.Text = horzcat(text{:});
-            obj.uiTextExtension.UserData  = val;
-        end
-        
-        %%%%%% Get Method %%%%%%
-        function val = get.SavePath(obj)
-            val = obj.uiTextFolder.Text;
-        end
-
-        function val = get.FileName(obj)
-            val = obj.uiFileName.Value;
-        end
-
-        function val = get.Extension(obj)
-            val = obj.uiTextExtension.UserData;
         end
     end
 
+    %%%%%%%%%%%%%%%% Callback Function %%%%%%%%%%%%%%%%
     methods(Access=protected)
 
-        %%%%%%%%%%%%%%%% Callback Function %%%%%%%%%%%%%%%%
         function capture(obj)
             Tab = struct2table(dir(obj.SavePath));
             [~,ExistFile(:),~] = cellfun(@(n) fileparts(n), Tab.name(~Tab.isdir), 'UniformOutput',false);
@@ -172,11 +169,10 @@ classdef figCapture < handle
                 tempname = obj.FileName{1}+"("+cnt+")";
                 cnt = cnt+1;
             end
-
             f = gcf;
             filepath = fullfile(obj.SavePath,tempname);
             cellfun(@(e) saveas(f,filepath,e), obj.Extension)
-            disp(['>> Save Figure @',obj.SavePath])
+            disp(">> Save Figure: "+filepath)
         end
 
         function setPath(obj)
@@ -186,9 +182,10 @@ classdef figCapture < handle
         function setExtenstion(obj)
             obj.Extension = [];
         end
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    end
 
 
+    methods(Access=protected)
 
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UI APP for set extension %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         function setterExtension(obj)
@@ -197,7 +194,8 @@ classdef figCapture < handle
 
             % tableの読み込み
                 tabpath = fileparts(mfilename('fullpath'));
-                data = readtable(fullfile(tabpath,'config/FigExtension.csv'));
+                tabpath = tabpath(1:find(tabpath==filesep,1,'last')-1);
+                data = readtable(fullfile(tabpath,'config','FigExtension.csv'));
                 if ~isempty(obj.Extension)
                     data.set = ismember(data.val,obj.Extension);
                 else  

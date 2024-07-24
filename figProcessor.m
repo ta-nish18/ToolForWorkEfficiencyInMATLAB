@@ -1,9 +1,3 @@
-% 自作Figureクラス
-% 使い方: コード冒頭で本クラスのインスタンスを定義、figure作成時には本クラスのfigureメソッドを使う、コードの最後でsaveメソッドを使う
-% is_save: figureを保存するかどうか
-% filename_save: 保存するファイル名(".../figure/{filename}"を想定, {filename}はmfilename()で取得)
-% type_save: 保存するファイルの拡張子(png, fig, jpg, both: png&fig)
-
 classdef figProcessor < handle
     properties
 
@@ -22,19 +16,23 @@ classdef figProcessor < handle
 
     methods
         function obj = figProcessor(varargin)
+
+            disp('Choose Save Folder')
+            path = uigetdir;
+            if path
+                obj.SavePath = path;
+            end
+
+            if ~obj.SavePath
+                error('Path is not selected')
+            end
+
             if nargin>0 && isa(varargin{1},'matlab.ui.Figure')
                 obj.figure = varargin{1};
             else
                 obj.figure   = figure( varargin{:} );
             end
 
-            while ~obj.SavePath
-                disp('Choose Save Folder')
-                path = uigetdir;
-                if path
-                    obj.SavePath = path;
-                end
-            end
         end
 
         %%%%%%%%%%%%%%% save figure as GIF %%%%%%%%%%%%%%%
@@ -66,7 +64,6 @@ classdef figProcessor < handle
                         case 'progress'
                             opt = {'WriteMode','append'};
                     end
-
             end
             drawnow
             pause(0.001)
