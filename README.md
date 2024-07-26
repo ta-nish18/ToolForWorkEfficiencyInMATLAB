@@ -11,34 +11,41 @@ To clone to your own MATLAB Drive, click on the following icon
 
 
 ## Function List
-- GUI : `UI.Bookmark`
-  
+- GUI : `Bookmark`
+
   Supports managing bookmarks in folders and move to saved folders with 1-click.
   ```matlab
-  >> UI.Bookmark;
+  >> Bookmark;
   ```
   
-- GUI : `UI.figCapture`
+- GUI : `WorkspaceStash`
+
+  Support for one-time save of a set of workspace variables and working paths.
+  ```matlab
+  >> WorkspaceStash;
+  ```
+  
+- GUI : `figCapture`
 
   Supports 1-click saving of the currently displayed figure with the specified path, folder name, and extension.
   ```matlab
-  >> UI.figCapture;
+  >> figCapture;
   ```
   
 - Function : `font`
 
-  Shortcut function to change font and text size on MATLAB desktop.
+  Shortcut function to change font and text size on MATLAB desktop. (refer to csv for correspondence between shortcut keys and formatting)
   ```matlab
-  >> font 10
-  >> font m
+  >> font 10  % Font size changed to 10pt
+  >> font m   % Change Font format 
   ```
   
 - Function : `win`
 
   Shortcut functions to change the style on the MATLABdesktop. (This function requires an external source.)
   ```matlab
-  >> win k
-  >> win w
+  >> win k  % change to dark mode
+  >> win w  % change to light mode
   ```
   
 - Function : `uiclose`
@@ -46,6 +53,7 @@ To clone to your own MATLAB Drive, click on the following icon
   Function to delete all uifigures being displayed.
   ```
   >> uiclose
+  >> uiclose [figname]
   ```
   
 - Class : `figProcessor`
