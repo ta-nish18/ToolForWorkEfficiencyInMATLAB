@@ -1,0 +1,33 @@
+# white - MATLAB color scheme
+# Generated with schemer_export v1.4.0, on MATLAB 24.1.0.2537033 (R2024a)
+# Fri Jul 26 17:51:16 JST 2024
+# To enable this color scheme in MATLAB use schemer_import, available at:
+#     https://github.com/scottclowe/matlab-schemer
+#     https://www.mathworks.com/matlabcentral/fileexchange/53862-matlab-schemer
+ColorsUseSystem=Btrue
+ColorsUseMLintAutoFixBackground=Btrue
+Editor.VariableHighlighting.Automatic=Btrue
+Editor.NonlocalVariableHighlighting=Btrue
+EditorCodepadHighVisible=Bfalse
+EditorCodeBlockDividers=Bfalse
+Editorhighlight-caret-row-boolean=Bfalse
+EditorRightTextLineVisible=Btrue
+EditorRightTextLimitLineWidth=I1
+ColorsText=C-16777216
+ColorsBackground=C-1
+Colors_M_Keywords=C-15859457
+Colors_M_Comments=C-16744429
+Colors_M_Strings=C-5830155
+Colors_M_UnterminatedStrings=C-7330270
+Colors_M_SystemCommands=C-7641594
+Colors_M_Errors=C-4771540
+Colors_HTML_HTMLLinks=C-15313241
+Colors_M_Warnings=C-27648
+ColorsMLintAutoFixBackground=C-9223357
+Editor.VariableHighlighting.Color=C-11184786
+Editor.NonlocalVariableHighlighting.TextColor=C-16735351
+Editorhighlight-lines=C-14408662
+Editorhighlight-caret-row-boolean-color=C-12632257
+EditorRightTextLimitLineColor=C-5723992
+Color_CmdWinWarnings=C-5021179
+Color_CmdWinErrors=C-4771540

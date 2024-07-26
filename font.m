@@ -1,6 +1,22 @@
+% Type   : Function
+% README : Functions to change font size and formatting
+% USAGE  : 
+%          >> font val
+%
+%          If "val" is double (e.g. 10), change font size to that value
+%          If "val" is string (e.g. Symbol), change the format to match the input
+%
+%          ex) 
+%          >> font 10
+%          >> font Symbol
+%
+% You can also set up shortcut keys.
+% Shortcut file is save at "./+InternalConfig/font.csv"
+
+
 function font(value)
     path = fileparts(mfilename('fullpath'));
-    tab = readtable(fullfile(path,'config','font.csv'));
+    tab = readtable(fullfile(path,'+InternalConfig','font.csv'));
     if nargin<1
         disp(repmat('-',1,50))
         disp('<<Shortcut list>>')
@@ -26,9 +42,7 @@ function font(value)
 
     else
         error('Input value could not be identified.')
-
     end
-    
     
     % Font Setting
     sys = settings;
@@ -41,6 +55,5 @@ function font(value)
         disp(['  font >> ',f])
         sys.matlab.fonts.codefont.Name.TemporaryValue = f;
     end
-
     disp(' ')
 end
