@@ -1,0 +1,74 @@
+{
+  "startup": {
+    "Bookmark": false,
+    "figCapture": false,
+    "WorkspaceStash": false,
+    "sendLINE": false
+  },
+  "finish": {
+    "saveWorkspace": false,
+    "sendLINE": false
+  },
+  "MessageManager": {
+    "LINE_Token": "__Replaced by own Token__"
+  },
+  "figCamera": {
+    "SavePath": "pwd",
+    "Extension": [
+      "png",
+      "eps",
+      "fig"
+    ]
+  },
+  "Bookmark": [],
+  "WorkspaceStash": [],
+  "font": [
+    {
+      "shortcutKey": "default",
+      "font": "Monospaced",
+      "size": 13
+    },
+    {
+      "shortcutKey": "a",
+      "font": "Academy Engraved LET",
+      "size": 0
+    },
+    {
+      "shortcutKey": "e",
+      "font": "Menlo",
+      "size": 0
+    },
+    {
+      "shortcutKey": "m",
+      "font": "Monospaced",
+      "size": 0
+    },
+    {
+      "shortcutKey": "pm",
+      "font": "PT Mono",
+      "size": 0
+    },
+    {
+      "shortcutKey": "am",
+      "font": "Andale Mono",
+      "size": 0
+    },
+    {
+      "shortcutKey": "ay",
+      "font": "Ayuthaya",
+      "size": 0
+    }
+  ],
+  "win": [
+    {
+      "shortcutKey": "w",
+      "prf_file": "white.prf"
+    },
+    {
+      "shortcutKey": "k",
+      "prf_file": "black.prf"
+    }
+  ],
+  "figProcessor": {},
+  "odeprogress": {}
+}

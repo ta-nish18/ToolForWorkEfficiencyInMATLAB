@@ -1,6 +1,5 @@
 classdef figProcessor < handle
     properties
-
         figure
         SavePath  = 0;
 
