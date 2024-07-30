@@ -29,7 +29,7 @@ To clone to your own MATLAB Drive, click on the following icon
 
   Supports 1-click saving of the currently displayed figure with the specified path, folder name, and extension.
   ```matlab
-  >> figCapture;
+  >> figCamera;
   ```
   
 - Function : `font`
