@@ -1,8 +1,8 @@
 classdef figCamera < handle
-% Class for saving a figure as an image file. ( including GUI support).
+% Class for saving a figure as an image file. (including GUI support).
 %
 % <usage>
-%       >> figCamera;    % Launch GUI to manage Bookmarks
+%       >> figCamera;    % Launch GUI to manage figCamera
 %
 % <static method>
 %       >> figCamera.capture(filename)  % Add bookmark data with the name specified in "name"
