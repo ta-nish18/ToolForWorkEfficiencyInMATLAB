@@ -22,6 +22,10 @@ classdef WorkspaceStash < SystemFunc.UItemplate
         function PushListBox(obj, ~, ~)
             data = obj.Data(obj.uilist.ValueIndex);
             cd(data.path)
+            if ~isempty(data.prj)
+                prj = fullfile(char(data.prj.RootFolder), [char(data.prj.Name),'.prj']);
+                openProject(prj); 
+            end
             tempVars = load(data.file);
             varNames = fieldnames(tempVars);
             cellfun(@(n) assignin('base', n, tempVars.(n)), varNames);
@@ -45,7 +49,12 @@ classdef WorkspaceStash < SystemFunc.UItemplate
             
 
             % Update stash data
-            new = struct('name',name,'path',pwd,'file',filename);
+            try 
+                prj = currentProject;
+            catch
+                prj = [];
+            end
+            new = struct('name',name,'path',pwd,'file',filename,'prj',prj);
             data = SystemFunc.config('WorkspaceStash');
             if isempty(data); data = new;
             else; data = [data,new];
